@@ -49,21 +49,28 @@ together automatically.
    `SEED_ADMIN_USERNAME` and `SEED_ADMIN_PASSWORD`. Set them to whatever
    you want the first admin login to be.
 4. Click **Apply**. Render provisions the database, then builds and deploys
-   the web service. The start command runs `prisma migrate deploy` before
-   `next start` on every boot, so the schema is always in sync (free-tier
-   services don't support Render's `preDeployCommand`, so this is done at
-   startup instead — re-running `migrate deploy` against an up-to-date
-   schema is a safe no-op).
-5. The database starts empty. Once the first deploy finishes, open a
-   **Shell** on the `sangang-web` service in the Render dashboard and run:
-   ```bash
-   npm run db:seed
-   ```
-   This creates the admin user (from the env vars you set in step 3) and
-   loads a handful of example groups/profiles. You can skip the
-   example data by removing it from `prisma/seed.ts` first, or just delete
-   those records later from `/admin` once you're signed in.
-6. Sign in at `https://<your-service>.onrender.com/admin/login`.
+   the web service. The start command runs, in order: `prisma migrate
+   deploy` (keeps the schema in sync — free-tier services don't support
+   Render's `preDeployCommand`, so this runs at startup instead, and
+   re-running it against an up-to-date schema is a safe no-op), then a
+   script that upserts the admin account from the `SEED_ADMIN_USERNAME` /
+   `SEED_ADMIN_PASSWORD` env vars you set in step 3, then `next start`.
+5. Sign in at `https://<your-service>.onrender.com/admin/login` with the
+   username/password from step 3.
+
+Because that admin-account step runs automatically on every boot, it works
+on the free plan even though **Render's free plan has no Shell/SSH
+access** — there's nothing to run manually. If you ever change
+`SEED_ADMIN_USERNAME`/`SEED_ADMIN_PASSWORD` in the dashboard, saving them
+triggers a redeploy, which re-provisions the account with the new values on
+the next boot.
+
+Want the example groups/profiles too (not just the admin account)? That
+still requires `npm run db:seed`, which needs either Shell access (paid
+plans) or pointing your local `.env`'s `DATABASE_URL` at the database's
+**External Database URL** (from the Render Postgres dashboard) and running
+`npm run db:seed` from your own machine. Only run it once — unlike the
+admin-account bootstrap, the example data isn't safe to insert twice.
 
 Notes:
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
 import { makeAvatarPng, makeMarkingPng } from "./png";
+import { ensureAdminUser } from "./lib/ensureAdmin";
 
 const prisma = new PrismaClient();
 
@@ -23,16 +23,7 @@ async function createImage(png: Buffer) {
 }
 
 async function main() {
-  const username = process.env.SEED_ADMIN_USERNAME ?? "admin";
-  const password = process.env.SEED_ADMIN_PASSWORD ?? "change-me-before-seeding";
-  const passwordHash = await bcrypt.hash(password, 12);
-
-  await prisma.adminUser.upsert({
-    where: { username },
-    update: { passwordHash, role: "ADMIN" },
-    create: { username, passwordHash, role: "ADMIN" },
-  });
-  console.log(`Admin user ready: ${username}`);
+  await ensureAdminUser(prisma);
 
   // --- Groups --------------------------------------------------------------
   const groupDefs = [
