@@ -6,6 +6,11 @@ import type { NextAuthConfig } from "next-auth";
 // in auth.ts, which only ever runs in the Node runtime (route handlers,
 // server actions).
 export const authConfig = {
+  // Render (and most PaaS hosts) put the app behind a proxy on a dynamic
+  // hostname that isn't known at build time, so Auth.js's default Host
+  // header validation rejects every request as an "untrusted host" unless
+  // told to trust it explicitly.
+  trustHost: true,
   pages: {
     signIn: "/admin/login",
   },
