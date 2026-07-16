@@ -1,0 +1,27 @@
+databases:
+  - name: sangang-db
+    plan: free
+    databaseName: sangang
+    user: sangang
+
+services:
+  - type: web
+    name: sangang-web
+    env: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    preDeployCommand: npm run db:deploy
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sangang-db
+          property: connectionString
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: SEED_ADMIN_USERNAME
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
