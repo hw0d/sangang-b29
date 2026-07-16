@@ -54,9 +54,11 @@ together automatically.
    `SEED_ADMIN_USERNAME` and `SEED_ADMIN_PASSWORD`. Set them to whatever
    you want the first admin login to be.
 4. Click **Apply**. Render provisions the database, then builds and deploys
-   the web service. `preDeployCommand` runs `prisma migrate deploy`
-   automatically before each deploy goes live, so the schema is always in
-   sync.
+   the web service. The start command runs `prisma migrate deploy` before
+   `next start` on every boot, so the schema is always in sync (free-tier
+   services don't support Render's `preDeployCommand`, so this is done at
+   startup instead — re-running `migrate deploy` against an up-to-date
+   schema is a safe no-op).
 5. The database starts empty. Once the first deploy finishes, open a
    **Shell** on the `sangang-web` service in the Render dashboard and run:
    ```bash
