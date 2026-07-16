@@ -14,53 +14,39 @@ export default async function AdminProfilesPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Manage Profiles</h1>
-        <Link href="/admin/profiles/new" className="btn-primary">
-          + New Profile
+        <h1>Manage Profiles</h1>
+        <Link href="/admin/profiles/new" className="toolbar-btn">
+          ➕ New Profile
         </Link>
       </div>
 
-      <div className="rounded-lg border border-border overflow-hidden overflow-x-auto">
-        <table className="w-full text-sm font-record">
-          <thead className="bg-surface-raised text-left text-[11px] uppercase text-muted">
+      <div className="sunken-panel" style={{ padding: 0 }}>
+        <table className="w-full">
+          <thead>
             <tr>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Group</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2 text-right">Actions</th>
+              <th>Name</th>
+              <th>Group</th>
+              <th>Status</th>
+              <th style={{ textAlign: "right" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {profiles.map((p) => (
-              <tr key={p.id} className="border-t border-border">
-                <td className="px-4 py-2">
+              <tr key={p.id}>
+                <td>
                   {p.fullName}
-                  {p.alias && (
-                    <span className="text-accent"> &quot;{p.alias}&quot;</span>
-                  )}
+                  {p.alias && <span className="italic"> &quot;{p.alias}&quot;</span>}
                 </td>
-                <td className="px-4 py-2">{p.group?.name ?? "—"}</td>
-                <td className="px-4 py-2">
+                <td>{p.group?.name ?? "—"}</td>
+                <td>
                   <StatusBadge status={p.status} />
                 </td>
-                <td className="px-4 py-2">
-                  <div className="flex justify-end items-center gap-3">
-                    <Link
-                      href={`/profiles/${p.id}`}
-                      className="text-muted hover:underline"
-                    >
-                      View
-                    </Link>
-                    <Link
-                      href={`/admin/profiles/${p.id}/edit`}
-                      className="text-accent hover:underline"
-                    >
-                      Edit
-                    </Link>
+                <td>
+                  <div className="flex justify-end items-center gap-2">
+                    <Link href={`/profiles/${p.id}`}>View</Link>
+                    <Link href={`/admin/profiles/${p.id}/edit`}>Edit</Link>
                     <form action={deleteProfile.bind(null, p.id)}>
-                      <button type="submit" className="btn-danger">
-                        Delete
-                      </button>
+                      <button type="submit">Delete</button>
                     </form>
                   </div>
                 </td>
@@ -69,9 +55,7 @@ export default async function AdminProfilesPage() {
           </tbody>
         </table>
         {profiles.length === 0 && (
-          <p className="p-6 text-center text-muted text-sm">
-            No profiles yet.
-          </p>
+          <p className="p-6 text-center text-sm">No profiles yet.</p>
         )}
       </div>
     </div>

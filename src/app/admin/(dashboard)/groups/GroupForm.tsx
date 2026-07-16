@@ -11,50 +11,51 @@ export function GroupForm({
   group?: Group;
 }) {
   return (
-    <form action={action} className="space-y-4 max-w-xl">
-      <Field label="Name">
+    <form action={action} className="field-row-stacked" style={{ maxWidth: 480 }}>
+      <Field label="Name" htmlFor="name">
         <input
+          id="name"
+          type="text"
           name="name"
           defaultValue={group?.name}
           required
-          className="field-input"
         />
       </Field>
-      <Field label="Aliases">
+      <Field label="Aliases" htmlFor="aliases">
         <input
+          id="aliases"
+          type="text"
           name="aliases"
           defaultValue={group?.aliases ?? ""}
-          className="field-input"
         />
       </Field>
-      <Field label="Description">
+      <Field label="Description" htmlFor="description">
         <textarea
+          id="description"
           name="description"
           defaultValue={group?.description ?? ""}
           rows={4}
-          className="field-input"
+          className="w-full"
         />
       </Field>
-      <Field label="Territory">
+      <Field label="Territory" htmlFor="territory">
         <input
+          id="territory"
+          type="text"
           name="territory"
           defaultValue={group?.territory ?? ""}
-          className="field-input"
         />
       </Field>
-      <Field label="Colors">
+      <Field label="Colors" htmlFor="colors">
         <input
+          id="colors"
+          type="text"
           name="colors"
           defaultValue={group?.colors ?? ""}
-          className="field-input"
         />
       </Field>
-      <Field label="Status">
-        <select
-          name="status"
-          defaultValue={group?.status ?? "ACTIVE"}
-          className="field-input"
-        >
+      <Field label="Status" htmlFor="status">
+        <select id="status" name="status" defaultValue={group?.status ?? "ACTIVE"}>
           {STATUSES.map((s) => (
             <option key={s} value={s}>
               {s}
@@ -62,24 +63,20 @@ export function GroupForm({
           ))}
         </select>
       </Field>
-      <Field label="Symbol image">
+      <Field label="Symbol image" htmlFor="symbolImage">
         {group?.symbolImageId && (
           <Image
             src={`/api/images/${group.symbolImageId}`}
             alt=""
             width={64}
             height={64}
-            className="w-16 h-16 rounded object-cover mb-2 border border-border"
+            className="field-border"
+            style={{ display: "block", marginBottom: 6, objectFit: "cover" }}
           />
         )}
-        <input
-          type="file"
-          name="symbolImage"
-          accept="image/*"
-          className="field-input"
-        />
+        <input id="symbolImage" type="file" name="symbolImage" accept="image/*" />
       </Field>
-      <button type="submit" className="btn-primary">
+      <button type="submit" className="default">
         Save
       </button>
     </form>
@@ -88,17 +85,19 @@ export function GroupForm({
 
 function Field({
   label,
+  htmlFor,
   children,
 }: {
   label: string;
+  htmlFor: string;
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
-      <span className="block text-xs uppercase tracking-wide text-muted mb-1 font-record">
+    <div>
+      <label htmlFor={htmlFor} className="block text-xs mb-1">
         {label}
-      </span>
+      </label>
       {children}
-    </label>
+    </div>
   );
 }

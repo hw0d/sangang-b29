@@ -57,99 +57,88 @@ export default async function ProfileDetailPage({
   ];
 
   return (
-    <div className="space-y-8">
-      <Link href="/profiles" className="text-xs text-accent hover:underline">
+    <div className="space-y-4">
+      <Link href="/profiles" className="text-xs">
         &larr; All profiles
       </Link>
 
-      <div className="grid sm:grid-cols-[220px_1fr] gap-6">
-        <div className="space-y-3">
-          <div className="aspect-square rounded-lg overflow-hidden border border-border bg-surface-raised relative">
-            {profile.mugshotImageId ? (
-              <Image
-                src={`/api/images/${profile.mugshotImageId}`}
-                alt={profile.fullName}
-                fill
-                sizes="220px"
-                className="object-cover"
+      <fieldset>
+        <legend>Case File</legend>
+        <div className="grid sm:grid-cols-[160px_1fr] gap-4">
+          <div className="space-y-2">
+            <div className="win-card-thumb aspect-square">
+              {profile.mugshotImageId ? (
+                <Image
+                  src={`/api/images/${profile.mugshotImageId}`}
+                  alt={profile.fullName}
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                />
+              ) : (
+                <MugshotPlaceholder className="w-full h-full" />
+              )}
+            </div>
+            <StatusBadge status={profile.status} />
+          </div>
+
+          <div className="min-w-0">
+            <h1>{profile.fullName}</h1>
+            {profile.alias && (
+              <p className="italic mt-0.5">&quot;{profile.alias}&quot;</p>
+            )}
+            {profile.group && (
+              <p className="text-sm mt-1">
+                Affiliation:{" "}
+                <Link href={`/groups/${profile.group.slug}`}>
+                  {profile.group.name}
+                </Link>
+                {profile.rank && ` (${profile.rank})`}
+              </p>
+            )}
+
+            {profile.description && (
+              <p className="mt-3 text-sm max-w-2xl">{profile.description}</p>
+            )}
+
+            <div className="flex flex-wrap gap-4 mt-3 text-sm">
+              <Field label="Date of birth" value={formatDate(profile.dob)} />
+              <Field
+                label="Height"
+                value={profile.heightCm ? `${profile.heightCm} cm` : "Unknown"}
               />
-            ) : (
-              <MugshotPlaceholder className="w-full h-full" />
+              <Field
+                label="Weight"
+                value={profile.weightKg ? `${profile.weightKg} kg` : "Unknown"}
+              />
+              <Field label="Eye color" value={profile.eyeColor ?? "Unknown"} />
+              <Field label="Hair color" value={profile.hairColor ?? "Unknown"} />
+              <Field label="On file since" value={formatDate(profile.createdAt)} />
+            </div>
+
+            {profile.notes && (
+              <div className="sunken-panel mt-3" style={{ padding: 8 }}>
+                <p className="text-[11px] font-bold mb-1">
+                  Investigator Notes
+                </p>
+                <p className="text-sm">{profile.notes}</p>
+              </div>
             )}
           </div>
-          <StatusBadge status={profile.status} />
         </div>
+      </fieldset>
 
-        <div className="min-w-0">
-          <h1 className="text-2xl font-semibold font-record">
-            {profile.fullName}
-          </h1>
-          {profile.alias && (
-            <p className="text-accent font-record mt-0.5">
-              &quot;{profile.alias}&quot;
-            </p>
-          )}
-          {profile.group && (
-            <p className="text-sm text-muted mt-1">
-              Affiliation:{" "}
-              <Link
-                href={`/groups/${profile.group.slug}`}
-                className="text-accent hover:underline"
-              >
-                {profile.group.name}
-              </Link>
-              {profile.rank && ` (${profile.rank})`}
-            </p>
-          )}
-
-          {profile.description && (
-            <p className="mt-4 text-sm text-foreground/90 max-w-2xl">
-              {profile.description}
-            </p>
-          )}
-
-          <dl className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 font-record text-sm">
-            <Field label="Date of birth" value={formatDate(profile.dob)} />
-            <Field
-              label="Height"
-              value={profile.heightCm ? `${profile.heightCm} cm` : "Unknown"}
-            />
-            <Field
-              label="Weight"
-              value={profile.weightKg ? `${profile.weightKg} kg` : "Unknown"}
-            />
-            <Field label="Eye color" value={profile.eyeColor ?? "Unknown"} />
-            <Field label="Hair color" value={profile.hairColor ?? "Unknown"} />
-            <Field label="On file since" value={formatDate(profile.createdAt)} />
-          </dl>
-
-          {profile.notes && (
-            <div className="mt-6 rounded border border-border bg-surface p-4">
-              <p className="text-[11px] uppercase tracking-wide text-muted font-record mb-1">
-                Investigator Notes
-              </p>
-              <p className="text-sm">{profile.notes}</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <section>
-        <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-          Tattoos &amp; Markings
-        </h2>
+      <fieldset>
+        <legend>Tattoos &amp; Markings</legend>
         {profile.tattoos.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+          <div className="sunken-panel text-center text-sm" style={{ padding: 24 }}>
             No tattoos or markings on file.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {profile.tattoos.map((t) => (
-              <div
-                key={t.id}
-                className="rounded-lg border border-border bg-surface overflow-hidden"
-              >
-                <div className="aspect-square relative bg-surface-raised">
+              <div key={t.id}>
+                <div className="win-card-thumb aspect-square">
                   {t.imageId ? (
                     <Image
                       src={`/api/images/${t.imageId}`}
@@ -162,28 +151,24 @@ export default async function ProfileDetailPage({
                     <MugshotPlaceholder className="w-full h-full" />
                   )}
                 </div>
-                <div className="p-3 font-record">
+                <div className="mt-1">
                   {t.bodyLocation && (
-                    <p className="text-xs font-semibold">{t.bodyLocation}</p>
+                    <p className="text-xs font-bold">{t.bodyLocation}</p>
                   )}
                   {t.meaning && (
-                    <p className="text-[11px] text-muted mt-0.5">
-                      {t.meaning}
-                    </p>
+                    <p className="win-card-meta text-[11px]">{t.meaning}</p>
                   )}
                 </div>
               </div>
             ))}
           </div>
         )}
-      </section>
+      </fieldset>
 
-      <section>
-        <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-          Known Affiliates
-        </h2>
+      <fieldset>
+        <legend>Known Affiliates</legend>
         {affiliates.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+          <div className="sunken-panel text-center text-sm" style={{ padding: 24 }}>
             No known affiliates on file.
           </div>
         ) : (
@@ -192,9 +177,9 @@ export default async function ProfileDetailPage({
               <Link
                 key={i}
                 href={`/profiles/${a.profile.id}`}
-                className="flex items-center gap-3 rounded-lg border border-border bg-surface hover:border-accent/60 transition-colors p-3"
+                className="win-card flex items-center gap-3"
               >
-                <div className="w-12 h-12 shrink-0 rounded overflow-hidden bg-surface-raised relative">
+                <div className="win-card-thumb w-12 h-12 shrink-0">
                   {a.profile.mugshotImageId ? (
                     <Image
                       src={`/api/images/${a.profile.mugshotImageId}`}
@@ -208,18 +193,16 @@ export default async function ProfileDetailPage({
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-record text-sm font-semibold truncate">
+                  <p className="text-sm font-bold truncate">
                     {a.profile.fullName}
                   </p>
-                  <p className="text-[11px] text-accent font-record">
-                    {formatLinkType(a.type)}
-                  </p>
+                  <p className="text-[11px]">{formatLinkType(a.type)}</p>
                 </div>
               </Link>
             ))}
           </div>
         )}
-      </section>
+      </fieldset>
     </div>
   );
 }
@@ -227,8 +210,8 @@ export default async function ProfileDetailPage({
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-[11px] uppercase text-muted">{label}</dt>
-      <dd>{value}</dd>
+      <p className="text-[11px]">{label}</p>
+      <p className="font-bold">{value}</p>
     </div>
   );
 }

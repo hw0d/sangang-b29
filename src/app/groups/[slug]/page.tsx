@@ -26,78 +26,65 @@ export default async function GroupDetailPage({
   if (!group) notFound();
 
   return (
-    <div className="space-y-8">
-      <Link href="/groups" className="text-xs text-accent hover:underline">
+    <div className="space-y-4">
+      <Link href="/groups" className="text-xs">
         &larr; All groups
       </Link>
 
-      <div className="flex flex-col sm:flex-row gap-6 rounded-lg border border-border bg-surface p-6">
-        <div className="w-28 h-28 shrink-0 rounded bg-surface-raised border border-border overflow-hidden relative flex items-center justify-center mx-auto sm:mx-0">
-          {group.symbolImageId ? (
-            <Image
-              src={`/api/images/${group.symbolImageId}`}
-              alt={group.name}
-              fill
-              sizes="112px"
-              className="object-cover"
-            />
-          ) : (
-            <span className="font-record text-2xl text-muted">
-              {group.name.slice(0, 2).toUpperCase()}
-            </span>
-          )}
-        </div>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-xl font-semibold font-record">
-              {group.name}
-            </h1>
-            <StatusBadge status={group.status} />
+      <fieldset>
+        <legend>Group File</legend>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div
+            className="win-card-thumb w-28 h-28 shrink-0 flex items-center justify-center mx-auto sm:mx-0"
+          >
+            {group.symbolImageId ? (
+              <Image
+                src={`/api/images/${group.symbolImageId}`}
+                alt={group.name}
+                fill
+                sizes="112px"
+                className="object-cover"
+              />
+            ) : (
+              <span className="text-2xl font-bold">
+                {group.name.slice(0, 2).toUpperCase()}
+              </span>
+            )}
           </div>
-          {group.aliases && (
-            <p className="text-sm text-accent mt-0.5">
-              aka {group.aliases}
-            </p>
-          )}
-          {group.description && (
-            <p className="text-sm text-foreground/90 mt-3 max-w-2xl">
-              {group.description}
-            </p>
-          )}
-          <dl className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4 font-record text-sm">
-            {group.territory && (
-              <div>
-                <dt className="text-[11px] uppercase text-muted">
-                  Territory
-                </dt>
-                <dd>{group.territory}</dd>
-              </div>
-            )}
-            {group.colors && (
-              <div>
-                <dt className="text-[11px] uppercase text-muted">Colors</dt>
-                <dd>{group.colors}</dd>
-              </div>
-            )}
-            <div>
-              <dt className="text-[11px] uppercase text-muted">Members</dt>
-              <dd>{group.members.length}</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
 
-      <section>
-        <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-          Known Members
-        </h2>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1>{group.name}</h1>
+              <StatusBadge status={group.status} />
+            </div>
+            {group.aliases && (
+              <p className="text-sm italic mt-0.5">aka {group.aliases}</p>
+            )}
+            {group.description && (
+              <p className="text-sm mt-2 max-w-2xl">{group.description}</p>
+            )}
+            <div className="flex flex-wrap gap-4 mt-3 text-sm">
+              {group.territory && (
+                <Field label="Territory" value={group.territory} />
+              )}
+              {group.colors && <Field label="Colors" value={group.colors} />}
+              <Field label="Members" value={String(group.members.length)} />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Known Members</legend>
         {group.members.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+          <div
+            className="sunken-panel text-center text-sm"
+            style={{ padding: 24 }}
+          >
             No members on file for this group.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {group.members.map((m) => (
               <PersonCard
                 key={m.id}
@@ -110,7 +97,16 @@ export default async function GroupDetailPage({
             ))}
           </div>
         )}
-      </section>
+      </fieldset>
+    </div>
+  );
+}
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-[11px]">{label}</p>
+      <p className="font-bold">{value}</p>
     </div>
   );
 }

@@ -6,12 +6,9 @@ export function MugshotPlaceholder({ className }: { className?: string }) {
       aria-hidden="true"
       role="img"
     >
-      <rect width="100" height="100" fill="var(--surface-raised)" />
-      <circle cx="50" cy="38" r="18" fill="var(--border)" />
-      <path
-        d="M18 92c0-20 14-34 32-34s32 14 32 34"
-        fill="var(--border)"
-      />
+      <rect width="100" height="100" fill="#fff" />
+      <circle cx="50" cy="38" r="18" fill="silver" />
+      <path d="M18 92c0-20 14-34 32-34s32 14 32 34" fill="silver" />
     </svg>
   );
 }

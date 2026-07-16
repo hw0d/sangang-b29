@@ -23,58 +23,49 @@ export default async function HomePage() {
     ]);
 
   return (
-    <div className="space-y-12">
-      <section className="rounded-lg border border-border bg-surface p-6">
-        <p className="font-record text-xs uppercase tracking-widest text-accent mb-2">
-          Case File Access
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-semibold">
-          SANGANG Records System
-        </h1>
-        <p className="mt-2 text-muted max-w-2xl">
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Case File Access</legend>
+        <h1>SANGANG Records System</h1>
+        <p className="mt-2 max-w-2xl">
           A fictional roleplay database of gangs, crews, and known
           affiliates. Browse group profiles, individual case files, tattoo
           &amp; marking references, and affiliate networks.
         </p>
-        <div className="mt-4 flex gap-3 text-sm font-record">
-          <Link
-            href="/profiles"
-            className="px-4 py-2 rounded bg-accent text-accent-foreground font-semibold hover:opacity-90 transition-opacity"
-          >
-            Browse Profiles
+        <div className="mt-3 flex gap-2">
+          <Link href="/profiles" className="toolbar-btn">
+            🪪 Browse Profiles
           </Link>
-          <Link
-            href="/groups"
-            className="px-4 py-2 rounded border border-border hover:border-accent hover:text-accent transition-colors"
-          >
-            Browse Groups
+          <Link href="/groups" className="toolbar-btn">
+            🗂️ Browse Groups
           </Link>
         </div>
-      </section>
+      </fieldset>
 
-      <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <StatTile label="Profiles on file" value={profileCount} />
-        <StatTile label="Known groups" value={groupCount} />
-        <StatTile
-          label="Active groups"
-          value={recentGroups.filter((g) => g.status === "ACTIVE").length}
-        />
-        <StatTile label="Recent entries" value={recentProfiles.length} />
-      </section>
+      <fieldset>
+        <legend>System Status</legend>
+        <div className="flex flex-wrap gap-3">
+          <StatTile label="Profiles on file" value={profileCount} />
+          <StatTile label="Known groups" value={groupCount} />
+          <StatTile
+            label="Active groups"
+            value={recentGroups.filter((g) => g.status === "ACTIVE").length}
+          />
+          <StatTile label="Recent entries" value={recentProfiles.length} />
+        </div>
+      </fieldset>
 
-      <section>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-record uppercase tracking-wide text-sm text-muted">
-            Recently Added Profiles
-          </h2>
-          <Link href="/profiles" className="text-xs text-accent hover:underline">
+      <fieldset>
+        <legend>Recently Added Profiles</legend>
+        <div className="flex items-center justify-end mb-2">
+          <Link href="/profiles" className="text-xs">
             View all &rarr;
           </Link>
         </div>
         {recentProfiles.length === 0 ? (
           <EmptyState message="No profiles on file yet." />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {recentProfiles.map((p) => (
               <PersonCard
                 key={p.id}
@@ -88,21 +79,19 @@ export default async function HomePage() {
             ))}
           </div>
         )}
-      </section>
+      </fieldset>
 
-      <section>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-record uppercase tracking-wide text-sm text-muted">
-            Recently Added Groups
-          </h2>
-          <Link href="/groups" className="text-xs text-accent hover:underline">
+      <fieldset>
+        <legend>Recently Added Groups</legend>
+        <div className="flex items-center justify-end mb-2">
+          <Link href="/groups" className="text-xs">
             View all &rarr;
           </Link>
         </div>
         {recentGroups.length === 0 ? (
           <EmptyState message="No groups on file yet." />
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {recentGroups.map((g) => (
               <GroupCard
                 key={g.id}
@@ -116,27 +105,23 @@ export default async function HomePage() {
             ))}
           </div>
         )}
-      </section>
+      </fieldset>
     </div>
   );
 }
 
 function StatTile({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-border bg-surface p-4">
-      <p className="font-record text-2xl font-semibold text-accent">
-        {value}
-      </p>
-      <p className="text-xs text-muted uppercase tracking-wide mt-1">
-        {label}
-      </p>
+    <div className="field-border" style={{ minWidth: 130, padding: 8 }}>
+      <p className="text-lg font-bold text-center">{value}</p>
+      <p className="text-[11px] text-center">{label}</p>
     </div>
   );
 }
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+    <div className="sunken-panel text-center text-sm" style={{ padding: 24 }}>
       {message}
     </div>
   );

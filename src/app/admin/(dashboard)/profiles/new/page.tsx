@@ -12,7 +12,7 @@ export default async function NewProfilePage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">New Profile</h1>
+      <h1>New Profile</h1>
       <ProfileForm action={createProfile} groups={groups} />
     </div>
   );

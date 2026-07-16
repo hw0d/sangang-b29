@@ -24,29 +24,27 @@ export function ProfileForm({
   groups: { id: string; name: string }[];
 }) {
   return (
-    <form action={action} className="space-y-4 max-w-xl">
-      <Field label="Full name">
+    <form action={action} className="field-row-stacked" style={{ maxWidth: 480 }}>
+      <Field label="Full name" htmlFor="fullName">
         <input
+          id="fullName"
+          type="text"
           name="fullName"
           defaultValue={profile?.fullName}
           required
-          className="field-input"
         />
       </Field>
-      <Field label="Alias / street name">
+      <Field label="Alias / street name" htmlFor="alias">
         <input
+          id="alias"
+          type="text"
           name="alias"
           defaultValue={profile?.alias ?? ""}
-          className="field-input"
         />
       </Field>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Status">
-          <select
-            name="status"
-            defaultValue={profile?.status ?? "UNKNOWN"}
-            className="field-input"
-          >
+      <div className="grid grid-cols-2 gap-3">
+        <Field label="Status" htmlFor="status">
+          <select id="status" name="status" defaultValue={profile?.status ?? "UNKNOWN"}>
             {STATUSES.map((s) => (
               <option key={s} value={s}>
                 {s.replace(/_/g, " ")}
@@ -54,12 +52,8 @@ export function ProfileForm({
             ))}
           </select>
         </Field>
-        <Field label="Group affiliation">
-          <select
-            name="groupId"
-            defaultValue={profile?.groupId ?? ""}
-            className="field-input"
-          >
+        <Field label="Group affiliation" htmlFor="groupId">
+          <select id="groupId" name="groupId" defaultValue={profile?.groupId ?? ""}>
             <option value="">None / unaffiliated</option>
             {groups.map((g) => (
               <option key={g.id} value={g.id}>
@@ -69,91 +63,90 @@ export function ProfileForm({
           </select>
         </Field>
       </div>
-      <Field label="Rank / role in group">
+      <Field label="Rank / role in group" htmlFor="rank">
         <input
+          id="rank"
+          type="text"
           name="rank"
           defaultValue={profile?.rank ?? ""}
-          className="field-input"
         />
       </Field>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Date of birth">
+      <div className="grid grid-cols-3 gap-3">
+        <Field label="Date of birth" htmlFor="dob">
           <input
+            id="dob"
             type="date"
             name="dob"
             defaultValue={toDateInputValue(profile?.dob)}
-            className="field-input"
           />
         </Field>
-        <div className="grid grid-cols-2 gap-2">
-          <Field label="Height (cm)">
-            <input
-              type="number"
-              name="heightCm"
-              defaultValue={profile?.heightCm ?? ""}
-              className="field-input"
-            />
-          </Field>
-          <Field label="Weight (kg)">
-            <input
-              type="number"
-              name="weightKg"
-              defaultValue={profile?.weightKg ?? ""}
-              className="field-input"
-            />
-          </Field>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Eye color">
+        <Field label="Height (cm)" htmlFor="heightCm">
           <input
+            id="heightCm"
+            type="number"
+            name="heightCm"
+            defaultValue={profile?.heightCm ?? ""}
+          />
+        </Field>
+        <Field label="Weight (kg)" htmlFor="weightKg">
+          <input
+            id="weightKg"
+            type="number"
+            name="weightKg"
+            defaultValue={profile?.weightKg ?? ""}
+          />
+        </Field>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <Field label="Eye color" htmlFor="eyeColor">
+          <input
+            id="eyeColor"
+            type="text"
             name="eyeColor"
             defaultValue={profile?.eyeColor ?? ""}
-            className="field-input"
           />
         </Field>
-        <Field label="Hair color">
+        <Field label="Hair color" htmlFor="hairColor">
           <input
+            id="hairColor"
+            type="text"
             name="hairColor"
             defaultValue={profile?.hairColor ?? ""}
-            className="field-input"
           />
         </Field>
       </div>
-      <Field label="Description">
+      <Field label="Description" htmlFor="description">
         <textarea
+          id="description"
           name="description"
           defaultValue={profile?.description ?? ""}
           rows={4}
-          className="field-input"
+          className="w-full"
         />
       </Field>
-      <Field label="Investigator notes">
+      <Field label="Investigator notes" htmlFor="notes">
         <textarea
+          id="notes"
           name="notes"
           defaultValue={profile?.notes ?? ""}
           rows={3}
-          className="field-input"
+          className="w-full"
         />
       </Field>
-      <Field label="Mugshot">
+      <Field label="Mugshot" htmlFor="mugshotImage">
         {profile?.mugshotImageId && (
           <Image
             src={`/api/images/${profile.mugshotImageId}`}
             alt=""
             width={80}
             height={80}
-            className="w-20 h-20 rounded object-cover mb-2 border border-border"
+            className="field-border"
+            style={{ display: "block", marginBottom: 6, objectFit: "cover" }}
           />
         )}
-        <input
-          type="file"
-          name="mugshotImage"
-          accept="image/*"
-          className="field-input"
-        />
+        <input id="mugshotImage" type="file" name="mugshotImage" accept="image/*" />
       </Field>
-      <button type="submit" className="btn-primary">
+      <button type="submit" className="default">
         Save
       </button>
     </form>
@@ -162,17 +155,19 @@ export function ProfileForm({
 
 function Field({
   label,
+  htmlFor,
   children,
 }: {
   label: string;
+  htmlFor: string;
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
-      <span className="block text-xs uppercase tracking-wide text-muted mb-1 font-record">
+    <div>
+      <label htmlFor={htmlFor} className="block text-xs mb-1">
         {label}
-      </span>
+      </label>
       {children}
-    </label>
+    </div>
   );
 }

@@ -12,21 +12,18 @@ export function formatStatus(status: string): string {
   return status.replace(/_/g, " ");
 }
 
-const STATUS_STYLES: Record<string, string> = {
-  AT_LARGE: "bg-danger/15 text-danger border-danger/40",
-  IN_CUSTODY: "bg-warn/15 text-warn border-warn/40",
-  ON_PROBATION: "bg-ok/15 text-ok border-ok/40",
-  DECEASED: "bg-surface-raised text-muted border-border",
-  UNKNOWN: "bg-surface-raised text-muted border-border",
-  ACTIVE: "bg-danger/15 text-danger border-danger/40",
-  DISBANDED: "bg-surface-raised text-muted border-border",
+const STATUS_COLORS: Record<string, string> = {
+  AT_LARGE: "#cc0000",
+  IN_CUSTODY: "#c98a00",
+  ON_PROBATION: "#007a33",
+  DECEASED: "#555555",
+  UNKNOWN: "#808080",
+  ACTIVE: "#cc0000",
+  DISBANDED: "#808080",
 };
 
-export function statusBadgeClasses(status: string): string {
-  return (
-    STATUS_STYLES[status] ??
-    "bg-surface-raised text-muted border-border"
-  );
+export function statusColor(status: string): string {
+  return STATUS_COLORS[status] ?? "#808080";
 }
 
 const LINK_TYPE_LABELS: Record<string, string> = {

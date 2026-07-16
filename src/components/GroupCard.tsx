@@ -18,38 +18,35 @@ export function GroupCard({
   memberCount: number;
 }) {
   return (
-    <Link
-      href={`/groups/${slug}`}
-      className="group flex items-center gap-4 rounded-lg border border-border bg-surface hover:border-accent/60 transition-colors p-4"
-    >
-      <div className="w-16 h-16 shrink-0 rounded bg-surface-raised border border-border overflow-hidden relative flex items-center justify-center">
+    <Link href={`/groups/${slug}`} className="win-card flex items-center gap-3">
+      <div className="win-card-thumb w-14 h-14 shrink-0 flex items-center justify-center">
         {symbolImageId ? (
           <Image
             src={`/api/images/${symbolImageId}`}
             alt={name}
             fill
-            sizes="64px"
+            sizes="56px"
             className="object-cover"
           />
         ) : (
-          <span className="font-record text-lg text-muted">
+          <span className="text-lg font-bold">
             {name.slice(0, 2).toUpperCase()}
           </span>
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="font-record font-semibold truncate">{name}</p>
-          <StatusBadge status={status} />
-        </div>
+        <p className="font-bold truncate">{name}</p>
         {territory && (
-          <p className="text-xs text-muted truncate mt-0.5">
+          <p className="win-card-meta text-xs truncate">
             Territory: {territory}
           </p>
         )}
-        <p className="text-[11px] text-muted mt-0.5">
+        <p className="win-card-meta text-[11px]">
           {memberCount} known member{memberCount === 1 ? "" : "s"}
         </p>
+        <div className="mt-1">
+          <StatusBadge status={status} />
+        </div>
       </div>
     </Link>
   );

@@ -10,23 +10,21 @@ export default async function GroupsPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="font-record text-xs uppercase tracking-widest text-accent mb-1">
-          Records &rarr; Groups
-        </p>
-        <h1 className="text-2xl font-semibold">Known Groups</h1>
-        <p className="text-muted text-sm mt-1">
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Records &rarr; Groups</legend>
+        <h1>Known Groups</h1>
+        <p className="text-xs mt-1">
           {groups.length} group{groups.length === 1 ? "" : "s"} on file.
         </p>
-      </div>
+      </fieldset>
 
       {groups.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+        <div className="sunken-panel text-center text-sm" style={{ padding: 24 }}>
           No groups on file yet.
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {groups.map((g) => (
             <GroupCard
               key={g.id}

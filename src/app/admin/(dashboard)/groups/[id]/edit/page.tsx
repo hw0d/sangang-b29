@@ -18,7 +18,7 @@ export default async function EditGroupPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Edit Group</h1>
+      <h1>Edit Group</h1>
       <GroupForm action={action} group={group} />
     </div>
   );

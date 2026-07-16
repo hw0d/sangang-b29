@@ -10,36 +10,29 @@ export default async function AdminDashboardPage() {
   ]);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold">Dashboard</h1>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="rounded-lg border border-border bg-surface p-4">
-          <p className="font-record text-2xl font-semibold text-accent">
-            {profileCount}
-          </p>
-          <p className="text-xs text-muted uppercase tracking-wide mt-1">
-            Profiles
-          </p>
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Dashboard</legend>
+        <div className="flex flex-wrap gap-3">
+          <div className="field-border" style={{ minWidth: 130, padding: 8 }}>
+            <p className="text-lg font-bold text-center">{profileCount}</p>
+            <p className="text-[11px] text-center">Profiles</p>
+          </div>
+          <div className="field-border" style={{ minWidth: 130, padding: 8 }}>
+            <p className="text-lg font-bold text-center">{groupCount}</p>
+            <p className="text-[11px] text-center">Groups</p>
+          </div>
         </div>
-        <div className="rounded-lg border border-border bg-surface p-4">
-          <p className="font-record text-2xl font-semibold text-accent">
-            {groupCount}
-          </p>
-          <p className="text-xs text-muted uppercase tracking-wide mt-1">
-            Groups
-          </p>
-        </div>
-      </div>
 
-      <div className="flex flex-wrap gap-3">
-        <Link href="/admin/profiles/new" className="btn-primary">
-          + New Profile
-        </Link>
-        <Link href="/admin/groups/new" className="btn-secondary">
-          + New Group
-        </Link>
-      </div>
+        <div className="flex flex-wrap gap-2 mt-3">
+          <Link href="/admin/profiles/new" className="toolbar-btn">
+            ➕ New Profile
+          </Link>
+          <Link href="/admin/groups/new" className="toolbar-btn">
+            ➕ New Group
+          </Link>
+        </div>
+      </fieldset>
     </div>
   );
 }

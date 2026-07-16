@@ -45,72 +45,57 @@ export default async function ProfilesPage({
   ]);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="font-record text-xs uppercase tracking-widest text-accent mb-1">
-          Records &rarr; Profiles
-        </p>
-        <h1 className="text-2xl font-semibold">Individual Profiles</h1>
-      </div>
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Records &rarr; Profiles</legend>
+        <h1>Individual Profiles</h1>
+      </fieldset>
 
-      <form className="flex flex-wrap gap-3 rounded-lg border border-border bg-surface p-4 font-record text-sm">
-        <input
-          type="text"
-          name="q"
-          defaultValue={q}
-          placeholder="Search name or alias..."
-          className="flex-1 min-w-[200px] bg-surface-raised border border-border rounded px-3 py-2 focus:outline-none focus:border-accent"
-        />
-        <select
-          name="status"
-          defaultValue={status ?? ""}
-          className="bg-surface-raised border border-border rounded px-3 py-2 focus:outline-none focus:border-accent"
-        >
-          <option value="">Any status</option>
-          {STATUSES.map((s) => (
-            <option key={s} value={s}>
-              {formatStatus(s)}
-            </option>
-          ))}
-        </select>
-        <select
-          name="group"
-          defaultValue={group ?? ""}
-          className="bg-surface-raised border border-border rounded px-3 py-2 focus:outline-none focus:border-accent"
-        >
-          <option value="">Any group</option>
-          {groups.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.name}
-            </option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="px-4 py-2 rounded bg-accent text-accent-foreground font-semibold hover:opacity-90 transition-opacity"
-        >
-          Filter
-        </button>
-        {(q || status || group) && (
-          <Link
-            href="/profiles"
-            className="px-4 py-2 rounded border border-border hover:border-accent hover:text-accent transition-colors"
-          >
-            Clear
-          </Link>
-        )}
-      </form>
+      <fieldset>
+        <legend>Filter</legend>
+        <form className="flex flex-wrap items-center gap-3">
+          <input
+            type="text"
+            name="q"
+            defaultValue={q}
+            placeholder="Search name or alias..."
+            style={{ minWidth: 200 }}
+          />
+          <select name="status" defaultValue={status ?? ""}>
+            <option value="">Any status</option>
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {formatStatus(s)}
+              </option>
+            ))}
+          </select>
+          <select name="group" defaultValue={group ?? ""}>
+            <option value="">Any group</option>
+            {groups.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.name}
+              </option>
+            ))}
+          </select>
+          <button type="submit">Filter</button>
+          {(q || status || group) && (
+            <Link href="/profiles" className="toolbar-btn">
+              Clear
+            </Link>
+          )}
+        </form>
+      </fieldset>
 
-      <p className="text-xs text-muted font-record">
+      <p className="text-xs">
         {profiles.length} result{profiles.length === 1 ? "" : "s"}
       </p>
 
       {profiles.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border p-8 text-center text-muted text-sm">
+        <div className="sunken-panel text-center text-sm" style={{ padding: 24 }}>
           No profiles match this search.
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {profiles.map((p) => (
             <PersonCard
               key={p.id}

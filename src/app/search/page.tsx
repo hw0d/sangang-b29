@@ -38,45 +38,39 @@ export default async function SearchPage({
     : [[], []];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="font-record text-xs uppercase tracking-widest text-accent mb-1">
-          Records &rarr; Search
-        </p>
-        <h1 className="text-2xl font-semibold">Search Records</h1>
-      </div>
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Records &rarr; Search</legend>
+        <h1>Search Records</h1>
+      </fieldset>
 
-      <form className="flex gap-3 rounded-lg border border-border bg-surface p-4 font-record text-sm">
-        <input
-          type="text"
-          name="q"
-          defaultValue={query}
-          autoFocus
-          placeholder="Search profiles or groups by name..."
-          className="flex-1 bg-surface-raised border border-border rounded px-3 py-2 focus:outline-none focus:border-accent"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 rounded bg-accent text-accent-foreground font-semibold hover:opacity-90 transition-opacity"
-        >
-          Search
-        </button>
-      </form>
+      <fieldset>
+        <legend>Find</legend>
+        <form className="flex gap-2">
+          <input
+            type="text"
+            name="q"
+            defaultValue={query}
+            autoFocus
+            placeholder="Search profiles or groups by name..."
+            className="flex-1"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </fieldset>
 
       {!query ? (
-        <p className="text-sm text-muted">
+        <p className="text-sm">
           Enter a name or alias to search across profiles and groups.
         </p>
       ) : (
         <>
-          <section>
-            <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-              Profiles ({profiles.length})
-            </h2>
+          <fieldset>
+            <legend>Profiles ({profiles.length})</legend>
             {profiles.length === 0 ? (
-              <p className="text-sm text-muted">No matching profiles.</p>
+              <p className="text-sm">No matching profiles.</p>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {profiles.map((p) => (
                   <PersonCard
                     key={p.id}
@@ -90,16 +84,14 @@ export default async function SearchPage({
                 ))}
               </div>
             )}
-          </section>
+          </fieldset>
 
-          <section>
-            <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-              Groups ({groups.length})
-            </h2>
+          <fieldset>
+            <legend>Groups ({groups.length})</legend>
             {groups.length === 0 ? (
-              <p className="text-sm text-muted">No matching groups.</p>
+              <p className="text-sm">No matching groups.</p>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {groups.map((g) => (
                   <GroupCard
                     key={g.id}
@@ -113,7 +105,7 @@ export default async function SearchPage({
                 ))}
               </div>
             )}
-          </section>
+          </fieldset>
         </>
       )}
     </div>

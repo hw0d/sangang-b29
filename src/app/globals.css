@@ -1,70 +1,353 @@
 @import "tailwindcss";
+@import "98.css/dist/98.css";
 
 :root {
-  --background: #0b0d10;
-  --surface: #14171c;
-  --surface-raised: #1a1e24;
-  --border: #2a2f37;
-  --foreground: #e6e8eb;
-  --muted: #8b939f;
-  --accent: #d99a3d;
-  --accent-foreground: #14100a;
-  --danger: #c0392b;
-  --ok: #3c8a5b;
-  --warn: #b8862f;
+  --win-teal: #008080;
+  --win-silver: silver;
+  --win-navy: #000080;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
-  --color-border: var(--border);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-danger: var(--danger);
-  --color-ok: var(--ok);
-  --color-warn: var(--warn);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: inherit;
+  font-weight: bold;
+  margin: 0;
+}
+
+h1 {
+  font-size: 16px;
+}
+
+h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+h3 {
+  font-size: 12px;
+}
+
+h4 {
+  font-size: 12px;
+}
+
+p {
+  margin: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--win-teal);
+  color: #000;
+  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+  font-size: 12px;
 }
 
-.font-record {
-  font-family: var(--font-mono), ui-monospace, monospace;
+a {
+  color: #00f;
 }
 
-.bg-scanlines {
-  background-image: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.015),
-    rgba(255, 255, 255, 0.015) 1px,
-    transparent 1px,
-    transparent 2px
-  );
+/* Desktop surface holding the centered application window */
+.desktop {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 24px 16px 48px;
+  display: flex;
+  justify-content: center;
 }
 
-@layer components {
-  .field-input {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    @apply w-full bg-surface-raised border border-border rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-accent;
-  }
-  .btn-primary {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    @apply inline-flex items-center px-4 py-2 rounded bg-accent text-accent-foreground font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50;
-  }
-  .btn-secondary {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    @apply inline-flex items-center px-4 py-2 rounded border border-border text-sm hover:border-accent hover:text-accent transition-colors;
-  }
-  .btn-danger {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    @apply inline-flex items-center px-3 py-1.5 rounded border border-danger/40 text-danger text-xs hover:bg-danger/10 transition-colors;
-  }
+.main-window {
+  width: 100%;
+  max-width: 960px;
+  height: fit-content;
+}
+
+.window-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid grey;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+  padding: 4px 10px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.toolbar-btn:active {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+}
+
+.toolbar-btn.active {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+  background: #d4d0c8;
+}
+
+.content-area {
+  padding: 12px;
+  min-height: 240px;
+  background: #fff;
+}
+
+/* Taskbar */
+.taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  background: var(--win-silver);
+  box-shadow:
+    inset 0 1px #fff,
+    0 -1px grey;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  z-index: 1000;
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 10px;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.start-button.open {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+}
+
+.taskbar-divider {
+  width: 2px;
+  height: 22px;
+  box-shadow:
+    inset -1px 0 #fff,
+    inset 1px 0 grey;
+}
+
+.taskbar-app {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 8px;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+  flex: 1;
+  min-width: 0;
+  max-width: 220px;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+.taskbar-app-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskbar-clock {
+  margin-left: auto;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px grey;
+  padding: 0 10px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  min-width: 60px;
+  justify-content: center;
+}
+
+/* Start menu */
+.start-menu {
+  position: fixed;
+  left: 3px;
+  bottom: 33px;
+  width: 230px;
+  z-index: 1001;
+  display: flex;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #dfdfdf,
+    inset -2px -2px grey,
+    inset 2px 2px #fff;
+  padding: 3px;
+}
+
+.start-menu-rail {
+  width: 26px;
+  background: linear-gradient(180deg, var(--win-navy), #1084d0);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.start-menu-rail span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.start-menu-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+}
+
+.start-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.start-menu-item:hover,
+.start-menu-item:focus {
+  background: var(--win-navy);
+  color: #fff;
+  outline: none;
+}
+
+.start-menu-item .icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Win98-flavored content helpers (sharp corners everywhere, no rounding) */
+.win-card {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  background: var(--win-silver);
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+  padding: 6px;
+}
+
+.win-card:hover,
+.win-card:focus {
+  background: var(--win-navy);
+  color: #fff;
+}
+
+.win-card:hover .win-card-meta,
+.win-card:focus .win-card-meta {
+  color: #d8d8ff;
+}
+
+.win-card-thumb {
+  background: #fff;
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px grey,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.win-card-meta {
+  color: #444;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #000;
+}
+
+.win-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+::selection {
+  background: var(--win-navy);
+  color: #fff;
 }

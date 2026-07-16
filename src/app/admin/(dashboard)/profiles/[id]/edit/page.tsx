@@ -49,31 +49,25 @@ export default async function EditProfilePage({
   const action = updateProfile.bind(null, id);
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-xl font-semibold mb-4">
-          Edit Profile: {profile.fullName}
-        </h1>
+    <div className="space-y-4">
+      <fieldset>
+        <legend>Edit Profile: {profile.fullName}</legend>
         <ProfileForm action={action} profile={profile} groups={groups} />
-      </div>
+      </fieldset>
 
-      <div>
-        <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-          Tattoos &amp; Markings
-        </h2>
+      <fieldset>
+        <legend>Tattoos &amp; Markings</legend>
         <TattooManager profileId={id} tattoos={profile.tattoos} />
-      </div>
+      </fieldset>
 
-      <div>
-        <h2 className="font-record uppercase tracking-wide text-sm text-muted mb-3">
-          Known Affiliates
-        </h2>
+      <fieldset>
+        <legend>Known Affiliates</legend>
         <AffiliateManager
           profileId={id}
           links={profile.linksFrom}
           otherProfiles={otherProfiles}
         />
-      </div>
+      </fieldset>
     </div>
   );
 }

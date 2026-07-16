@@ -10,32 +10,21 @@ export function LoginForm() {
   );
 
   return (
-    <form action={formAction} className="space-y-4">
-      <label className="block">
-        <span className="block text-xs uppercase tracking-wide text-muted mb-1 font-record">
+    <form action={formAction} className="field-row-stacked">
+      <div>
+        <label htmlFor="username" className="block text-xs mb-1">
           Username
-        </span>
-        <input
-          name="username"
-          type="text"
-          required
-          autoFocus
-          className="field-input"
-        />
-      </label>
-      <label className="block">
-        <span className="block text-xs uppercase tracking-wide text-muted mb-1 font-record">
+        </label>
+        <input id="username" name="username" type="text" required autoFocus />
+      </div>
+      <div>
+        <label htmlFor="password" className="block text-xs mb-1">
           Password
-        </span>
-        <input
-          name="password"
-          type="password"
-          required
-          className="field-input"
-        />
-      </label>
-      {errorMessage && <p className="text-sm text-danger">{errorMessage}</p>}
-      <button type="submit" disabled={isPending} className="btn-primary w-full justify-center">
+        </label>
+        <input id="password" name="password" type="password" required />
+      </div>
+      {errorMessage && <p className="text-sm">⚠ {errorMessage}</p>}
+      <button type="submit" className="default" disabled={isPending}>
         {isPending ? "Signing in..." : "Sign in"}
       </button>
     </form>
