@@ -105,3 +105,18 @@ Notes:
 
 Only create additional admin accounts by adding rows to `AdminUser`
 (password hashed with bcrypt) — there's no public sign-up.
+
+## Live updates
+
+Every open tab (public or admin) keeps a Server-Sent Events connection open
+to `/api/events`. Whenever an admin action creates, edits, or deletes a
+group/profile/tattoo/affiliate link, the server broadcasts a "something
+changed" signal and every connected tab silently re-fetches its current
+page's data (`router.refresh()`) — no polling, no manual reload needed to
+see other people's changes show up.
+
+This uses a plain in-process `EventEmitter` (`src/lib/eventBus.ts`), which
+is enough as long as the app runs as a single instance (true for Render's
+free web-service plan). If this is ever scaled to multiple instances, the
+event bus would need to move to something all instances can share (e.g.
+Postgres `LISTEN`/`NOTIFY`), since in-memory events don't cross processes.

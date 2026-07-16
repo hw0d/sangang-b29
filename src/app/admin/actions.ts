@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { slugify } from "@/lib/utils";
+import { notifyDataChanged } from "@/lib/eventBus";
 import type { GroupStatus, LinkType, ProfileStatus } from "@prisma/client";
 
 async function requireAdmin() {
@@ -76,6 +77,7 @@ export async function createGroup(formData: FormData) {
 
   revalidatePath("/admin/groups");
   revalidatePath("/groups");
+  notifyDataChanged();
   redirect(`/admin/groups/${group.id}/edit`);
 }
 
@@ -102,6 +104,7 @@ export async function updateGroup(id: string, formData: FormData) {
   revalidatePath("/admin/groups");
   revalidatePath("/groups");
   revalidatePath(`/groups/${group.slug}`);
+  notifyDataChanged();
   redirect("/admin/groups");
 }
 
@@ -110,6 +113,7 @@ export async function deleteGroup(id: string) {
   await prisma.group.delete({ where: { id } });
   revalidatePath("/admin/groups");
   revalidatePath("/groups");
+  notifyDataChanged();
 }
 
 // -------------------------------------------------------------- Profiles --
@@ -142,6 +146,7 @@ export async function createProfile(formData: FormData) {
 
   revalidatePath("/admin/profiles");
   revalidatePath("/profiles");
+  notifyDataChanged();
   redirect(`/admin/profiles/${profile.id}/edit`);
 }
 
@@ -175,6 +180,7 @@ export async function updateProfile(id: string, formData: FormData) {
   revalidatePath("/admin/profiles");
   revalidatePath("/profiles");
   revalidatePath(`/profiles/${id}`);
+  notifyDataChanged();
   redirect("/admin/profiles");
 }
 
@@ -183,6 +189,7 @@ export async function deleteProfile(id: string) {
   await prisma.profile.delete({ where: { id } });
   revalidatePath("/admin/profiles");
   revalidatePath("/profiles");
+  notifyDataChanged();
 }
 
 // --------------------------------------------------------------- Tattoos --
@@ -202,6 +209,7 @@ export async function addTattoo(profileId: string, formData: FormData) {
 
   revalidatePath(`/admin/profiles/${profileId}/edit`);
   revalidatePath(`/profiles/${profileId}`);
+  notifyDataChanged();
 }
 
 export async function deleteTattoo(id: string, profileId: string) {
@@ -209,6 +217,7 @@ export async function deleteTattoo(id: string, profileId: string) {
   await prisma.tattoo.delete({ where: { id } });
   revalidatePath(`/admin/profiles/${profileId}/edit`);
   revalidatePath(`/profiles/${profileId}`);
+  notifyDataChanged();
 }
 
 // -------------------------------------------------------- Affiliate links --
@@ -236,6 +245,7 @@ export async function addAffiliateLink(
   revalidatePath(`/admin/profiles/${fromProfileId}/edit`);
   revalidatePath(`/profiles/${fromProfileId}`);
   revalidatePath(`/profiles/${toProfileId}`);
+  notifyDataChanged();
 }
 
 export async function deleteAffiliateLink(id: string, fromProfileId: string) {
@@ -244,4 +254,5 @@ export async function deleteAffiliateLink(id: string, fromProfileId: string) {
   revalidatePath(`/admin/profiles/${fromProfileId}/edit`);
   revalidatePath(`/profiles/${link.fromProfileId}`);
   revalidatePath(`/profiles/${link.toProfileId}`);
+  notifyDataChanged();
 }

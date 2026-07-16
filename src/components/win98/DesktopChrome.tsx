@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { StartMenu, type NavItem } from "./StartMenu";
 import { TaskbarClock } from "./TaskbarClock";
+import { LiveUpdates } from "./LiveUpdates";
 
 const NAV: NavItem[] = [
   { href: "/", label: "Home", icon: "🏠" },
@@ -37,6 +38,7 @@ export function DesktopChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <LiveUpdates />
       <div className="desktop">
         <div className="window main-window">
           <div className="title-bar">
