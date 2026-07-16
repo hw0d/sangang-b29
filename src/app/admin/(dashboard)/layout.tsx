@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth, signOut } from "@/auth";
+import { formatStaffPosition } from "@/lib/utils";
 
 export default async function AdminDashboardLayout({
   children,
@@ -9,6 +10,8 @@ export default async function AdminDashboardLayout({
 }) {
   const session = await auth();
   if (!session?.user) redirect("/admin/login");
+
+  const position = formatStaffPosition(session.user.position);
 
   return (
     <div className="space-y-4">
@@ -23,6 +26,11 @@ export default async function AdminDashboardLayout({
           <Link href="/admin/profiles" className="toolbar-btn">
             🪪 Profiles
           </Link>
+          {session.user.role === "ADMIN" && (
+            <Link href="/admin/users" className="toolbar-btn">
+              🧑‍💼 Users
+            </Link>
+          )}
         </div>
         <form
           action={async () => {
@@ -31,7 +39,10 @@ export default async function AdminDashboardLayout({
           }}
           className="flex items-center gap-2"
         >
-          <span className="text-xs">Signed in as {session.user.name}</span>
+          <span className="text-xs">
+            Signed in as {session.user.name}
+            {position ? ` (${position})` : ""}
+          </span>
           <button type="submit">Sign out</button>
         </form>
       </div>

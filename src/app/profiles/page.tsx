@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { PersonCard } from "@/components/PersonCard";
 import { formatStatus } from "@/lib/utils";
 import type { Prisma, ProfileStatus } from "@prisma/client";
@@ -20,6 +21,7 @@ export default async function ProfilesPage({
   searchParams: Promise<{ q?: string; status?: string; group?: string }>;
 }) {
   const { q, status, group } = await searchParams;
+  const session = await auth();
 
   const where: Prisma.ProfileWhereInput = {};
   if (q) {
@@ -48,7 +50,14 @@ export default async function ProfilesPage({
     <div className="space-y-4">
       <fieldset>
         <legend>Records &rarr; Profiles</legend>
-        <h1>Individual Profiles</h1>
+        <div className="flex items-center justify-between">
+          <h1>Individual Profiles</h1>
+          {session?.user && (
+            <Link href="/admin/profiles/new" className="toolbar-btn">
+              ➕ New Profile
+            </Link>
+          )}
+        </div>
       </fieldset>
 
       <fieldset>

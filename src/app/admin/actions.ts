@@ -3,18 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
 import { slugify } from "@/lib/utils";
 import { notifyDataChanged } from "@/lib/eventBus";
+import { requireAdmin } from "@/lib/adminAuth";
 import type { GroupStatus, LinkType, ProfileStatus } from "@prisma/client";
-
-async function requireAdmin() {
-  const session = await auth();
-  if (!session?.user) {
-    redirect("/admin/login");
-  }
-  return session;
-}
 
 async function storeImageIfProvided(
   formData: FormData,

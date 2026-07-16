@@ -1,22 +1,36 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { GroupCard } from "@/components/GroupCard";
 
 export const dynamic = "force-dynamic";
 
 export default async function GroupsPage() {
-  const groups = await prisma.group.findMany({
-    orderBy: { name: "asc" },
-    include: { _count: { select: { members: true } } },
-  });
+  const [groups, session] = await Promise.all([
+    prisma.group.findMany({
+      orderBy: { name: "asc" },
+      include: { _count: { select: { members: true } } },
+    }),
+    auth(),
+  ]);
 
   return (
     <div className="space-y-4">
       <fieldset>
         <legend>Records &rarr; Groups</legend>
-        <h1>Known Groups</h1>
-        <p className="text-xs mt-1">
-          {groups.length} group{groups.length === 1 ? "" : "s"} on file.
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1>Known Groups</h1>
+            <p className="text-xs mt-1">
+              {groups.length} group{groups.length === 1 ? "" : "s"} on file.
+            </p>
+          </div>
+          {session?.user && (
+            <Link href="/admin/groups/new" className="toolbar-btn">
+              ➕ New Group
+            </Link>
+          )}
+        </div>
       </fieldset>
 
       {groups.length === 0 ? (

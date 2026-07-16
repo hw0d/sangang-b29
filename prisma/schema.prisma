@@ -35,6 +35,17 @@ enum AdminRole {
   EDITOR
 }
 
+enum StaffPosition {
+  LSPD_DETECTIVE_I
+  LSPD_DETECTIVE_II
+  LSPD_DETECTIVE_III
+  LSPD_LIEUTENANT_IN_CHARGE
+  LSSD_DETECTIVE_I
+  LSSD_DETECTIVE_II
+  LSSD_DETECTIVE_III
+  LSSD_LIEUTENANT_IN_CHARGE
+}
+
 // Binary image data lives in the DB (not on disk) because Render's free
 // web-service filesystem is ephemeral and wiped on every deploy/restart.
 model Image {
@@ -49,11 +60,12 @@ model Image {
 }
 
 model AdminUser {
-  id           String    @id @default(cuid())
-  username     String    @unique
+  id           String         @id @default(cuid())
+  username     String         @unique
   passwordHash String
-  role         AdminRole @default(EDITOR)
-  createdAt    DateTime  @default(now())
+  role         AdminRole      @default(EDITOR)
+  position     StaffPosition?
+  createdAt    DateTime       @default(now())
 }
 
 model Group {

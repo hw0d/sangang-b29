@@ -50,6 +50,35 @@ export function inverseLinkType(type: string): string {
   return INVERSE_LINK_TYPE[type] ?? type;
 }
 
+export const STAFF_POSITIONS = [
+  "LSPD_DETECTIVE_I",
+  "LSPD_DETECTIVE_II",
+  "LSPD_DETECTIVE_III",
+  "LSPD_LIEUTENANT_IN_CHARGE",
+  "LSSD_DETECTIVE_I",
+  "LSSD_DETECTIVE_II",
+  "LSSD_DETECTIVE_III",
+  "LSSD_LIEUTENANT_IN_CHARGE",
+] as const;
+
+const STAFF_POSITION_LABELS: Record<string, string> = {
+  LSPD_DETECTIVE_I: "LSPD Detective I",
+  LSPD_DETECTIVE_II: "LSPD Detective II",
+  LSPD_DETECTIVE_III: "LSPD Detective III",
+  LSPD_LIEUTENANT_IN_CHARGE: "LSPD Lieutenant In Charge",
+  LSSD_DETECTIVE_I: "LSSD Detective I",
+  LSSD_DETECTIVE_II: "LSSD Detective II",
+  LSSD_DETECTIVE_III: "LSSD Detective III",
+  LSSD_LIEUTENANT_IN_CHARGE: "LSSD Lieutenant In Charge",
+};
+
+export function formatStaffPosition(
+  position: string | null | undefined
+): string | null {
+  if (!position) return null;
+  return STAFF_POSITION_LABELS[position] ?? position;
+}
+
 export function formatDate(date: Date | string | null | undefined): string {
   if (!date) return "Unknown";
   const d = typeof date === "string" ? new Date(date) : date;
