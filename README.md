@@ -1,14 +1,9 @@
-# SANGANG Records System
+# LSSCPATF Records System
 
-A fictional gang / organized-crime records database built for roleplay and
-creative use, modeled on the structure of real-world gang databases (e.g.
-CalGang): group profiles, individual case files with a mugshot, a tattoo /
-marking gallery per person, and known-affiliate links between people.
-
-**This is a fictional roleplay tool.** It does not depict real people, gangs,
-or organized crime groups, and is not affiliated with any law enforcement
-agency or real-world database. Don't use it to publish information about
-real, identifiable individuals.
+Los Santos STEP and Criminal Profiteering Act Task Force — a gang and
+organized-crime records system: group profiles, individual case files with
+a mugshot, a tattoo / marking gallery per person, and known-affiliate links
+between people.
 
 ## Stack
 
@@ -32,7 +27,7 @@ cp .env.example .env
 # SEED_ADMIN_USERNAME / SEED_ADMIN_PASSWORD to your choice
 
 npm run db:migrate   # applies prisma/migrations to your database
-npm run db:seed      # creates the admin user + example fictional data
+npm run db:seed      # creates the admin user + example data
 
 npm run dev
 ```
@@ -65,7 +60,7 @@ together automatically.
    npm run db:seed
    ```
    This creates the admin user (from the env vars you set in step 3) and
-   loads a handful of example fictional groups/profiles. You can skip the
+   loads a handful of example groups/profiles. You can skip the
    example data by removing it from `prisma/seed.ts` first, or just delete
    those records later from `/admin` once you're signed in.
 6. Sign in at `https://<your-service>.onrender.com/admin/login`.

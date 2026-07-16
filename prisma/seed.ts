@@ -34,14 +34,14 @@ async function main() {
   });
   console.log(`Admin user ready: ${username}`);
 
-  // --- Groups (all fictional) ---------------------------------------------
+  // --- Groups --------------------------------------------------------------
   const groupDefs = [
     {
       name: "Crimson Serpents",
       aliases: "The Serpents",
       description:
-        "A fictional street crew said to control the docklands smuggling trade in this setting's Old Port district. Known for a coiled-serpent hand sign and crimson bandanas.",
-      territory: "Old Port / Dockside Row (fictional)",
+        "Street crew believed to control the docklands smuggling trade in the Old Port district. Known for a coiled-serpent hand sign and crimson bandanas.",
+      territory: "Old Port / Dockside Row",
       colors: "Crimson red, black",
       status: "ACTIVE" as const,
       hue: 350,
@@ -50,8 +50,8 @@ async function main() {
       name: "Iron Vultures MC",
       aliases: "The Vultures",
       description:
-        "A fictional outlaw motorcycle club roleplay faction based out of the industrial district. Associated with vehicle theft storylines and turf disputes with the Serpents.",
-      territory: "Industrial Quarter (fictional)",
+        "Outlaw motorcycle club based out of the industrial district. Associated with vehicle theft rings and turf disputes with the Serpents.",
+      territory: "Industrial Quarter",
       colors: "Black, gunmetal grey",
       status: "ACTIVE" as const,
       hue: 210,
@@ -60,8 +60,8 @@ async function main() {
       name: "Nightshade Crew",
       aliases: "Shade",
       description:
-        "A fictional, loosely organized crew tied to in-character narcotics storylines. Mostly disbanded after an in-universe police operation two seasons ago.",
-      territory: "Formerly Southbank Estates (fictional)",
+        "Loosely organized crew tied to narcotics trafficking. Mostly disbanded following a task force operation two years ago.",
+      territory: "Formerly Southbank Estates",
       colors: "Purple, silver",
       status: "DISBANDED" as const,
       hue: 270,
@@ -87,9 +87,9 @@ async function main() {
     });
     groups[g.name] = group.id;
   }
-  console.log(`Seeded ${groupDefs.length} fictional groups`);
+  console.log(`Seeded ${groupDefs.length} example groups`);
 
-  // --- Profiles (all fictional characters) --------------------------------
+  // --- Profiles --------------------------------------------------------------
   const profileDefs = [
     {
       fullName: "Marcus \"Rook\" Delaney",
@@ -101,9 +101,8 @@ async function main() {
       weightKg: 86,
       eyeColor: "Brown",
       hairColor: "Black",
-      description:
-        "Fictional character. Said in-story to run the Serpents' Old Port smuggling routes.",
-      notes: "Roleplay flag: wanted for in-character warehouse arson plot.",
+      description: "Said to run the Serpents' Old Port smuggling routes.",
+      notes: "Wanted in connection with a warehouse arson.",
       hue: 350,
       tattoos: [
         { bodyLocation: "Right forearm", meaning: "Coiled serpent — full Serpents membership mark" },
@@ -119,8 +118,8 @@ async function main() {
       weightKg: 61,
       eyeColor: "Green",
       hairColor: "Auburn",
-      description: "Fictional character. In-story getaway driver for the Serpents.",
-      notes: "Roleplay flag: currently in in-character holding after a scripted traffic stop.",
+      description: "Getaway driver for the Serpents.",
+      notes: "Currently in custody following a traffic stop.",
       hue: 350,
       tattoos: [
         { bodyLocation: "Left wrist", meaning: "Card suit — crew recruit marker" },
@@ -136,8 +135,8 @@ async function main() {
       weightKg: 95,
       eyeColor: "Grey",
       hairColor: "Bald",
-      description: "Fictional character. In-story enforcer for the Vultures MC.",
-      notes: "Roleplay flag: linked in-character to a chop-shop storyline.",
+      description: "Enforcer for the Vultures MC.",
+      notes: "Linked to an active chop-shop investigation.",
       hue: 210,
       tattoos: [
         { bodyLocation: "Back, full", meaning: "Vulture-in-flight — club back patch mirror tattoo" },
@@ -154,7 +153,7 @@ async function main() {
       weightKg: 64,
       eyeColor: "Hazel",
       hairColor: "Brown",
-      description: "Fictional character. Newest in-story prospect for the Vultures.",
+      description: "Newest prospect for the Vultures.",
       notes: null,
       hue: 210,
       tattoos: [],
@@ -169,9 +168,8 @@ async function main() {
       weightKg: 79,
       eyeColor: "Brown",
       hairColor: "Grey",
-      description:
-        "Fictional character. In-story former head of the now-disbanded Nightshade Crew.",
-      notes: "Roleplay flag: character retired from the server storyline.",
+      description: "Former head of the now-disbanded Nightshade Crew.",
+      notes: "Confirmed deceased. Case closed.",
       hue: 270,
       tattoos: [
         { bodyLocation: "Chest", meaning: "Four-point star — leadership marker" },
@@ -187,7 +185,7 @@ async function main() {
       weightKg: 58,
       eyeColor: "Blue",
       hairColor: "Black",
-      description: "Fictional character. Whereabouts unknown in the current storyline.",
+      description: "Current whereabouts unknown.",
       notes: null,
       hue: 270,
       tattoos: [],
@@ -202,7 +200,7 @@ async function main() {
       weightKg: 70,
       eyeColor: "Brown",
       hairColor: "Brown",
-      description: "Fictional character, unaffiliated. Family tie to Elena Cruz in-story.",
+      description: "Unaffiliated. Family tie to Elena Cruz.",
       notes: null,
       hue: 40,
       tattoos: [],
@@ -242,13 +240,13 @@ async function main() {
       });
     }
   }
-  console.log(`Seeded ${profileDefs.length} fictional profiles`);
+  console.log(`Seeded ${profileDefs.length} example profiles`);
 
   // --- Affiliate / rival / family links ------------------------------------
   const linkDefs: { from: string; to: string; type: "ASSOCIATE" | "RIVAL" | "FAMILY" | "SUBORDINATE_OF" | "LEADER_OF"; note?: string }[] = [
-    { from: "Marcus \"Rook\" Delaney", to: "Elena \"Domino\" Cruz", type: "LEADER_OF", note: "In-story chain of command" },
-    { from: "Elena \"Domino\" Cruz", to: "Owen \"Domino's Cousin\" Blake", type: "FAMILY", note: "In-story cousins" },
-    { from: "Marcus \"Rook\" Delaney", to: "Gideon \"Ghost\" Okafor", type: "RIVAL", note: "In-story Old Port turf dispute" },
+    { from: "Marcus \"Rook\" Delaney", to: "Elena \"Domino\" Cruz", type: "LEADER_OF", note: "Chain of command" },
+    { from: "Elena \"Domino\" Cruz", to: "Owen \"Domino's Cousin\" Blake", type: "FAMILY", note: "Cousins" },
+    { from: "Marcus \"Rook\" Delaney", to: "Gideon \"Ghost\" Okafor", type: "RIVAL", note: "Old Port turf dispute" },
     { from: "Gideon \"Ghost\" Okafor", to: "Priya \"Marbles\" Anand", type: "LEADER_OF" },
     { from: "Victor \"Salt\" Reyes", to: "Talia \"Shade\" Novak", type: "ASSOCIATE", note: "Former crew ties" },
   ];

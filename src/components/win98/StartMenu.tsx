@@ -39,7 +39,7 @@ export function StartMenu({
       {open && (
         <div className="start-menu">
           <div className="start-menu-rail">
-            <span>SANGANG 98</span>
+            <span>LSSCPATF 98</span>
           </div>
           <div className="start-menu-items">
             {nav.map((item) => (

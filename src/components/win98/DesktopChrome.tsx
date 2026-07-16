@@ -17,18 +17,18 @@ const NAV: NavItem[] = [
 
 function pageInfo(pathname: string): { title: string; icon: string } {
   if (pathname.startsWith("/admin")) {
-    return { title: "Admin — SANGANG Records", icon: "🔒" };
+    return { title: "Admin — LSSCPATF Records", icon: "🔒" };
   }
   if (pathname.startsWith("/groups")) {
-    return { title: "Groups — SANGANG Records", icon: "🗂️" };
+    return { title: "Groups — LSSCPATF Records", icon: "🗂️" };
   }
   if (pathname.startsWith("/profiles")) {
-    return { title: "Profiles — SANGANG Records", icon: "🪪" };
+    return { title: "Profiles — LSSCPATF Records", icon: "🪪" };
   }
   if (pathname.startsWith("/search")) {
-    return { title: "Search — SANGANG Records", icon: "🔍" };
+    return { title: "Search — LSSCPATF Records", icon: "🔍" };
   }
-  return { title: "SANGANG Records System", icon: "🏠" };
+  return { title: "LSSCPATF Records System", icon: "🏠" };
 }
 
 export function DesktopChrome({ children }: { children: React.ReactNode }) {
@@ -74,10 +74,9 @@ export function DesktopChrome({ children }: { children: React.ReactNode }) {
 
             <div className="status-bar">
               <p className="status-bar-field">
-                Fictional roleplay database — not a real law-enforcement
-                system
+                Los Santos STEP and Criminal Profiteering Act Task Force
               </p>
-              <p className="status-bar-field">SANGANG Records System</p>
+              <p className="status-bar-field">Records Division</p>
             </div>
           </div>
         </div>

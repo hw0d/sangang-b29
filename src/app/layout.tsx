@@ -3,9 +3,9 @@ import { DesktopChrome } from "@/components/win98/DesktopChrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SANGANG Records System",
+  title: "LSSCPATF Records System",
   description:
-    "SANGANG — a fictional roleplay gang & organized-crime records database.",
+    "Los Santos STEP and Criminal Profiteering Act Task Force — gang and organized crime records system.",
 };
 
 export default function RootLayout({
