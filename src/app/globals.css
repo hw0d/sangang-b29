@@ -7,6 +7,29 @@
   --win-navy: #000080;
 }
 
+/* 98.css ships a deliberately jagged bitmap font (font-smoothing: none) for
+   retro authenticity, but that reads as pixelated on modern high-DPI
+   screens in a way real Windows 98 never did — actual Win98 rendered with
+   plain Tahoma/MS Sans Serif and normal font smoothing. Override back to
+   that on every element 98.css targets. */
+body,
+.title-bar,
+.window,
+button,
+input,
+label,
+legend,
+li[role="tab"],
+option,
+select,
+table,
+textarea,
+ul.tree-view {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 html,
 body {
   height: 100%;
@@ -47,7 +70,7 @@ body {
   margin: 0;
   background: var(--win-teal);
   color: #000;
-  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
   font-size: 12px;
 }
 
