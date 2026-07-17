@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { MugshotPlaceholder } from "@/components/MugshotPlaceholder";
 import { StatusBadge } from "@/components/StatusBadge";
 import {
@@ -18,6 +19,7 @@ export default async function ProfileDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await auth();
 
   const profile = await prisma.profile.findUnique({
     where: { id },
@@ -58,9 +60,16 @@ export default async function ProfileDetailPage({
 
   return (
     <div className="space-y-4">
-      <Link href="/profiles" className="text-xs">
-        &larr; All profiles
-      </Link>
+      <div className="flex items-center justify-between">
+        <Link href="/profiles" className="text-xs">
+          &larr; All profiles
+        </Link>
+        {session?.user && (
+          <Link href={`/admin/profiles/${id}/edit`} className="toolbar-btn">
+            ✏️ Edit
+          </Link>
+        )}
+      </div>
 
       <fieldset>
         <legend>Case File</legend>
