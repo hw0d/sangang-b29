@@ -17,18 +17,18 @@ const NAV: NavItem[] = [
 
 function pageInfo(pathname: string): { title: string; icon: string } {
   if (pathname.startsWith("/admin")) {
-    return { title: "Admin — LSSCPATF Records", icon: "🔒" };
+    return { title: "Admin — C.R.E.S.T. Records", icon: "🔒" };
   }
   if (pathname.startsWith("/groups")) {
-    return { title: "Groups — LSSCPATF Records", icon: "🗂️" };
+    return { title: "Groups — C.R.E.S.T. Records", icon: "🗂️" };
   }
   if (pathname.startsWith("/profiles")) {
-    return { title: "Profiles — LSSCPATF Records", icon: "🪪" };
+    return { title: "Profiles — C.R.E.S.T. Records", icon: "🪪" };
   }
   if (pathname.startsWith("/search")) {
-    return { title: "Search — LSSCPATF Records", icon: "🔍" };
+    return { title: "Search — C.R.E.S.T. Records", icon: "🔍" };
   }
-  return { title: "LSSCPATF Records System", icon: "🏠" };
+  return { title: "C.R.E.S.T. Records System", icon: "🏠" };
 }
 
 export function DesktopChrome({ children }: { children: React.ReactNode }) {
@@ -74,7 +74,7 @@ export function DesktopChrome({ children }: { children: React.ReactNode }) {
 
             <div className="status-bar">
               <p className="status-bar-field">
-                Los Santos STEP and Criminal Profiteering Act Task Force
+                Criminal Racketeering Enforcement and STEP Task Force
               </p>
               <p className="status-bar-field">Records Division</p>
             </div>
