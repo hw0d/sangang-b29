@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { PersonCard } from "@/components/PersonCard";
 import { StatusBadge } from "@/components/StatusBadge";
 
@@ -13,6 +14,7 @@ export default async function GroupDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const session = await auth();
 
   const group = await prisma.group.findUnique({
     where: { slug },
@@ -27,9 +29,16 @@ export default async function GroupDetailPage({
 
   return (
     <div className="space-y-4">
-      <Link href="/groups" className="text-xs">
-        &larr; All groups
-      </Link>
+      <div className="flex items-center justify-between">
+        <Link href="/groups" className="text-xs">
+          &larr; All groups
+        </Link>
+        {session?.user && (
+          <Link href={`/admin/groups/${group.id}/edit`} className="toolbar-btn">
+            ✏️ Edit
+          </Link>
+        )}
+      </div>
 
       <fieldset>
         <legend>Group File</legend>
