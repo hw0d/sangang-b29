@@ -3,9 +3,9 @@ import { DesktopChrome } from "@/components/win98/DesktopChrome";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LSSCPATF Records System",
+  title: "C.R.E.S.T. Records System",
   description:
-    "Los Santos STEP and Criminal Profiteering Act Task Force — gang and organized crime records system.",
+    "Criminal Racketeering Enforcement and STEP Task Force - gang and organized crime records system.",
 };
 
 export default function RootLayout({

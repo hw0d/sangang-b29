@@ -26,7 +26,7 @@ export default async function HomePage() {
     <div className="space-y-4">
       <fieldset>
         <legend>Case File Access</legend>
-        <h1>LSSCPATF Records System</h1>
+        <h1>C.R.E.S.T. Records System</h1>
         <p className="mt-2 max-w-2xl">
           Central records system for gangs, crews, and known criminal
           affiliates operating in Los Santos. Browse group profiles,
