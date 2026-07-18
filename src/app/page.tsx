@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { PersonCard } from "@/components/PersonCard";
@@ -6,7 +9,14 @@ import { CrestSeal } from "@/components/CrestSeal";
 
 export const dynamic = "force-dynamic";
 
+// Drop a file at public/logo.png to use it as the home page logo instead of
+// the built-in seal — no code changes needed, just add the file.
+function hasCustomLogo(): boolean {
+  return existsSync(join(process.cwd(), "public", "logo.png"));
+}
+
 export default async function HomePage() {
+  const customLogo = hasCustomLogo();
   const [profileCount, groupCount, recentProfiles, recentGroups] =
     await Promise.all([
       prisma.profile.count(),
@@ -28,7 +38,17 @@ export default async function HomePage() {
       <fieldset>
         <legend>Case File Access</legend>
         <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-          <CrestSeal className="w-28 h-28 shrink-0" />
+          {customLogo ? (
+            <Image
+              src="/logo.png"
+              alt="C.R.E.S.T. logo"
+              width={112}
+              height={112}
+              className="w-28 h-28 shrink-0 object-contain"
+            />
+          ) : (
+            <CrestSeal className="w-28 h-28 shrink-0" />
+          )}
           <div className="min-w-0 text-center sm:text-left">
             <h1>C.R.E.S.T. Records System</h1>
             <p className="text-xs italic mt-0.5">
