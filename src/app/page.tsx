@@ -78,28 +78,24 @@ export default async function HomePage() {
       <fieldset>
         <legend>About C.R.E.S.T.</legend>
         <p className="text-sm max-w-2xl">
-          Established after an LSPD detective and an LSSD detective
-          discovered they had independently opened three identical case
-          files on the same crew, the C.R.E.S.T. Task Force exists to keep
-          one moderately accurate record of persons and organizations of
-          interest across Los Santos County, instead of two mediocre ones.
+          It's just a spreadsheet. A big, shared spreadsheet that the police 
+          use to track known gang members and associates. It contains 
+          information about their criminal history, tattoos, affiliations, 
+          and other identifying details. The goal is to help law enforcement 
+          identify and apprehend criminals more effectively.
         </p>
         <ul className="text-sm mt-2" style={{ paddingLeft: 18, listStyle: "square" }}>
           <li>
-            Maintains a database of persons the Task Force finds suspicious,
-            pending further suspicion.
+            N/A
           </li>
           <li>
-            Coordinates seamlessly between LSPD and LSSD, assuming both
-            departments remember their login.
+            N/A
           </li>
           <li>
-            Committed to due process, procedural fairness, and finding out
-            who tagged the east-side underpass again.
+            N/A
           </li>
           <li>
-            Publishes intelligence that is current as of whenever someone
-            last got around to updating it.
+            N/A
           </li>
         </ul>
       </fieldset>
